@@ -9,3 +9,4 @@ print(type(n))
 
 for i in a:
     print(i)
+

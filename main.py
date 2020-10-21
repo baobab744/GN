@@ -27,13 +27,14 @@ font_rect = font_box.get_rect(center=(W // 2, H - font.get_height()))
 bg = pygame.image.load('Image/room.png')
 bg_rect = bg.get_rect(topleft=(0, 0))
 
-cat = pygame.image.load('Image/cat.png')
+cat = pygame.image.load('Image2/ter.png')
+cat = pygame.transform.scale
 cat_rect = cat.get_rect(center=(70, 220))
 
-dog = pygame.image.load('Image/dog.png')
+dog = pygame.image.load('Image2/cter.png')
 dog_rect = dog.get_rect(center=(410, 220))
 
-owl = pygame.image.load('Image/owl.png')
+owl = pygame.image.load('Image2/zal.png')
 owl_rect = owl.get_rect(center=(210, 120))
 
 dialog = pygame.image.load('Image/dialog.png')
@@ -64,15 +65,40 @@ while run:
                 numeral += e.unicode
             elif e.key == pygame.K_BACKSPACE:
                 numeral = numeral[:-1]
+            elif e.key == pygame.K_RETURN and numeral:
+                if int(numeral) > 100:
+                    dialogs('', OUTSIDE_BG, 'Вы ошиблись')
+                elif int(numeral) > num:
+                    dialogs('', OUTSIDE_BG, 'Число меньше')
+                elif int(numeral) < num:
+                    dialogs('', OUTSIDE_BG, 'Число больше')
+                if move == 1:
+                    if int(numeral) == num:
+                        dialogs(f'Это число {numeral}', dialog_cat_pos, 'Кот, ты победил!')
+                        block = 1
+                    else:
+                        dialogs('Пёс, твой ход', dialog_cat_pos, 'Продолжаем')
+                elif move == 2:
+                    if int(numeral) == num:
+                        dialogs(f'Это число {numeral}', dialog_dog_pos, 'Пёс, ты победил!')
+                        block = 1
+                    else:
+                        dialogs('Кот, твой ход', dialog_dog_pos, 'Продолжаем')
+                # move += 1
+                # if move > 2:
+                #    move = 1
+                numeral = ''
+                move = 1 if move >= 2 else + 1
 
-    screen.blit(bg, bg_rect)
-    screen.blit(cat, cat_rect)
-    screen.blit(dog, dog_rect)
-    screen.blit(owl, owl_rect)
-    screen.blit(font_box, font_rect)
-    font_box.fill(SILVER)
-    font_box.blit(font.render(numeral, True, BLACK), (10, 0))
-    pygame.display.update()
+    if block == 0:
+        screen.blit(bg, bg_rect)
+        screen.blit(cat, cat_rect)
+        screen.blit(dog, dog_rect)
+        screen.blit(owl, owl_rect)
+        screen.blit(font_box, font_rect)
+        font_box.fill(SILVER)
+        font_box.blit(font.render(numeral, True, BLACK), (10, 0))
+        pygame.display.update()
 
     if start == 1:
         dialogs('', OUTSIDE_BG, 'Я загадала число')
